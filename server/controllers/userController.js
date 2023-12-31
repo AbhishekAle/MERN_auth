@@ -22,4 +22,19 @@ export const registerUser = async (req, res, next) => {
   }
 };
 
-// export const loginUser = async (req, req, next) => {};
+export const loginUser = async (req, res, next) => {
+  const { email, password } = req.body;
+  try {
+    const existingUser = await UserModel.findOne({ email });
+    if (!existingUser) {
+      res.status(404).json({ message: "User not found Please register" });
+    }
+    const validPassword = bcrypt.compareSync(password, existingUser.password);
+    if (!validPassword) {
+      res.status(401).json({ message: "wrong crendentials" });
+    }
+    res.status(200).json({ message: "logged in successfully" });
+  } catch (error) {
+    console.log(error);
+  }
+};
