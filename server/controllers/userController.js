@@ -29,21 +29,28 @@ export const loginUser = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const existingUser = await UserModel.findOne({ email });
+
     if (!existingUser) {
-      res.status(404).json({ message: "User not found Please register" });
+      return res
+        .status(404)
+        .json({ message: "User not found. Please register." });
     }
+
     const validPassword = bcrypt.compareSync(password, existingUser.password);
+
     if (!validPassword) {
-      res.status(401).json({ message: "wrong crendentials" });
+      return res.status(401).json({ message: "Wrong credentials." });
     }
+
     const { password: pass, ...rest } = existingUser._doc;
     const token = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY);
 
     res.cookie("access_token", token, { httpOnly: true });
 
-    res.status(200).json({ rest, token });
+    return res.status(200).json({ ...rest, token });
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error." });
   }
 };
 
