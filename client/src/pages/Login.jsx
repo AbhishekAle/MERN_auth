@@ -5,9 +5,11 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await fetch("/api/login", {
         method: "POST",
@@ -16,12 +18,10 @@ const Login = () => {
         },
         body: JSON.stringify(email, password),
       });
-      if (res.ok) {
-        localStorage.setItem("isAuthenticated", "true");
-      } else {
-        console.log("login fails");
-      }
-      navigate("/");
+      setLoading(false);
+      navigate("/dashboard");
+      window.location.reload();
+      localStorage.setItem("isAuthenticated", "true");
     } catch (error) {
       console.error("Error during login:", error);
     }
@@ -45,7 +45,7 @@ const Login = () => {
             autoComplete="current-password"
             value={password}
           />
-          <button>Login</button>
+          <button>{loading ? "loading" : "Login"}</button>
         </form>
       </div>
     </>
