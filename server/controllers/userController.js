@@ -59,3 +59,10 @@ export const logoutUser = async (req, res) => {
   res.clearCookie("access_token");
   res.status(200).json({ message: "user has benn logged out" });
 };
+
+export const getUser = async (req, res, next) => {
+  try {
+    const user = await UserModel.find();
+    res.status(200).json(user);
+  } catch (error) {}
+};
