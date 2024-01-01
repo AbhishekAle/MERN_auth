@@ -1,13 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [userData, setUserData] = useState({});
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
+  //getting inputted values
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.id]: e.target.value });
   };
 
+  //fordwarding data
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -18,14 +22,15 @@ const Register = () => {
         },
         body: JSON.stringify(userData),
       });
-      alert("registered successfully ");
 
+      //handling errors
       const data = await res.json();
       if (data.success === false) {
         setError(data.message);
         return;
       }
       setError(null);
+      navigate("/login");
     } catch (error) {
       setError(error.message);
     }

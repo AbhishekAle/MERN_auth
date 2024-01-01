@@ -2,6 +2,7 @@ import UserModel from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+//register controller
 export const registerUser = async (req, res, next) => {
   const { username, email, password } = req.body;
   try {
@@ -23,6 +24,7 @@ export const registerUser = async (req, res, next) => {
   }
 };
 
+//logIn Controller
 export const loginUser = async (req, res, next) => {
   const { email, password } = req.body;
   try {
@@ -43,4 +45,10 @@ export const loginUser = async (req, res, next) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+//logOut controller
+export const logoutUser = async (req, res) => {
+  res.clearCookie("access_token");
+  res.status(200).json({ message: "user has benn logged out" });
 };
