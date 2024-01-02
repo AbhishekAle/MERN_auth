@@ -66,3 +66,13 @@ export const getUser = async (req, res, next) => {
     res.status(200).json(user);
   } catch (error) {}
 };
+
+export const getUserById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const user = await UserModel.findById(id);
+    res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+  }
+};
