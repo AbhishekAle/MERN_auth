@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setToken } from "../slices/userSlice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -16,12 +19,13 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(email, password),
+        body: JSON.stringify({ email, password }),
       });
       setLoading(false);
+      const data = await res.json();
+      dispatch(setToken(data.token));
+
       navigate("/dashboard");
-      window.location.reload();
-      localStorage.setItem("isAuthenticated", "true");
     } catch (error) {
       console.error("Error during login:", error);
     }
