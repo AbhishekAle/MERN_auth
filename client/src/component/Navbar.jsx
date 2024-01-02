@@ -16,7 +16,7 @@ const Navbar = () => {
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex items-center justify-between">
         <Link to="/" className="text-white text-2xl font-bold">
-          Your Logo
+          Home
         </Link>
 
         <div className="flex space-x-4">
@@ -25,6 +25,12 @@ const Navbar = () => {
           </Link>
           {currentUser ? (
             <>
+              <Link
+                to="/dashboard"
+                className="text-white hover:text-gray-300 cursor-pointer"
+              >
+                Dashboard
+              </Link>
               <button
                 onClick={handleLogout}
                 className="text-white hover:text-gray-300 cursor-pointer"

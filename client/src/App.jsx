@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
 import Private from "./component/Private";
+import "./App.css";
 
 const App = () => {
   return (

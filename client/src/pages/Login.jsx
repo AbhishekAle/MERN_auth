@@ -16,6 +16,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setLoading(true);
     try {
       const res = await fetch("/api/login", {
@@ -72,15 +73,15 @@ const Login = () => {
             {showPassword ? <BsEyeSlash /> : <BsEye />}
           </button>
         </div>
-        <h1 className="text-xl text-gray-700">
-          Don't have an account?{" "}
+        <p className="text-xl text-gray-700">
+          Don't have an account?
           <button
             onClick={() => navigate("/register")}
-            className="text-blue-500 hover:text-blue-700 focus:outline-none"
+            className="text-red-700 hover:text-blue-500 focus:outline-none"
           >
             Register
           </button>
-        </h1>
+        </p>
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
           type="submit"
